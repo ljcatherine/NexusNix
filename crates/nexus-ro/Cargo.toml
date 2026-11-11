@@ -1,0 +1,11 @@
+[package]
+name = "nexus-ro"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "SSH forced-command helper that enforces the Nexus read-only catalog on the server"
+
+[dependencies]
+nexus-security.workspace = true
+sha2.workspace = true
+hex.workspace = true

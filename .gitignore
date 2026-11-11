@@ -1,0 +1,29 @@
+reference/
+target/
+*.pdb
+/dist/
+/local/
+.env
+/target
+
+# graphify knowledge graph output (generated)
+graphify-out/
+
+# Nix build outputs
+/result
+/result-*
+.direnv/
+
+# Never commit credentials or keys
+*_ed25519
+*_rsa
+*_ecdsa
+id_*
+!id_*.pub
+*.pem
+*.p12
+*.pfx
+*.key
+
+# Owner-specific deployment values (see docs/site.example.json)
+site.json

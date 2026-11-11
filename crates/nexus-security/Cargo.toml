@@ -1,0 +1,23 @@
+[package]
+name = "nexus-security"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[dependencies]
+nexus-core.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+thiserror.workspace = true
+regex.workspace = true
+sha2.workspace = true
+hex.workspace = true
+time.workspace = true
+uuid.workspace = true
+parking_lot.workspace = true
+hmac = "0.13"
+sha1 = "0.11"
+getrandom = "0.3"
+
+[dev-dependencies]
+tempfile.workspace = true

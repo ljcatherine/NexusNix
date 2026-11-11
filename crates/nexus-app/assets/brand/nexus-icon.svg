@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <!-- Nexus "Orbit N" app icon master (chosen 9 Nov 2026). Full-bleed square:
+       iOS applies its own rounded mask. Shared with the Nexus iOS repo
+       (docs/design/nexus-icon.svg). Colours: Midnight palette. -->
+  <defs>
+    <radialGradient id="mid" cx="50%" cy="38%" r="75%">
+      <stop offset="0" stop-color="#1D3566"/>
+      <stop offset=".55" stop-color="#0B1430"/>
+      <stop offset="1" stop-color="#060A16"/>
+    </radialGradient>
+    <linearGradient id="arc" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#9CBCFF"/>
+      <stop offset="1" stop-color="#C9ADFF"/>
+    </linearGradient>
+  </defs>
+  <rect width="1024" height="1024" fill="url(#mid)"/>
+  <!-- back half of the orbit, behind the letter -->
+  <g transform="rotate(-24 512 512)">
+    <ellipse cx="512" cy="512" rx="372" ry="136" fill="none" stroke="#9CBCFF" stroke-opacity=".35" stroke-width="24"/>
+  </g>
+  <path d="M334 718V306L690 718V306" fill="none" stroke="#E9EDF7" stroke-width="92" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- front half of the orbit with the two nodes (iPhone and PC) -->
+  <g transform="rotate(-24 512 512)">
+    <path d="M140 512A372 136 0 0 0 884 512" fill="none" stroke="url(#arc)" stroke-width="26" stroke-linecap="round"/>
+    <circle cx="140" cy="512" r="44" fill="#9CBCFF"/>
+    <circle cx="884" cy="512" r="44" fill="#C9ADFF"/>
+  </g>
+</svg>

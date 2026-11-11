@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <!-- Nexus "Orbit N" tuned for 16-32 px (Windows taskbar, title bar, Explorer):
+       heavier strokes, no faint back ring, larger nodes, rounded tile. -->
+  <defs>
+    <radialGradient id="mid" cx="50%" cy="38%" r="75%">
+      <stop offset="0" stop-color="#22407A"/>
+      <stop offset=".6" stop-color="#0D1734"/>
+      <stop offset="1" stop-color="#070C18"/>
+    </radialGradient>
+    <clipPath id="tile"><rect width="1024" height="1024" rx="200"/></clipPath>
+  </defs>
+  <g clip-path="url(#tile)">
+    <rect width="1024" height="1024" fill="url(#mid)"/>
+    <path d="M318 742V282L706 742V282" fill="none" stroke="#FFFFFF" stroke-width="138" stroke-linecap="round" stroke-linejoin="round"/>
+    <g transform="rotate(-24 512 512)">
+      <path d="M118 512A394 150 0 0 0 906 512" fill="none" stroke="#9CBCFF" stroke-width="64" stroke-linecap="round"/>
+      <circle cx="118" cy="512" r="74" fill="#9CBCFF"/>
+      <circle cx="906" cy="512" r="74" fill="#C9ADFF"/>
+    </g>
+  </g>
+</svg>

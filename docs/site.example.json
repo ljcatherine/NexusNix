@@ -1,0 +1,7 @@
+{
+  "gateway_host": "nexus-gateway.example.workers.dev",
+  "access_issuer": "https://example.cloudflareaccess.com",
+  "access_client_id": "00000000-0000-0000-0000-000000000000",
+  "debian_user": "debian",
+  "nixos_user": "nixos"
+}

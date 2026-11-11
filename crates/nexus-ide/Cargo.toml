@@ -1,0 +1,14 @@
+[package]
+name = "nexus-ide"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[dependencies]
+nexus-ui.workspace = true
+egui = "0.37"
+ropey = "1.6"
+syntect = { version = "5.3", default-features = false, features = ["parsing", "regex-fancy", "default-syntaxes"] }
+two-face = { version = "0.5", default-features = false, features = ["syntect-fancy"] }
+regex.workspace = true
+serde.workspace = true

@@ -1,0 +1,12 @@
+[package]
+name = "nexus-terminal"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[dependencies]
+nexus-ui.workspace = true
+egui = "0.37"
+alacritty_terminal = "0.26"
+portable-pty = "0.9"
+parking_lot.workspace = true

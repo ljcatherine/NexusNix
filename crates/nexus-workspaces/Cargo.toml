@@ -1,0 +1,21 @@
+[package]
+name = "nexus-workspaces"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[dependencies]
+nexus-security.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+thiserror.workspace = true
+regex.workspace = true
+sha2.workspace = true
+hex.workspace = true
+time.workspace = true
+uuid.workspace = true
+ignore = "0.4"
+similar = "2"
+
+[dev-dependencies]
+tempfile.workspace = true

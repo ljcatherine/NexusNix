@@ -1,0 +1,21 @@
+[package]
+name = "nexus-access"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[dependencies]
+serde.workspace = true
+serde_json.workspace = true
+thiserror.workspace = true
+sha2.workspace = true
+getrandom = "0.3"
+base64 = "0.22"
+ureq = { version = "3", features = ["json"] }
+
+nexus-core.workspace = true
+keyring = "4"
+aes-gcm = "0.11"
+
+[dev-dependencies]
+tempfile.workspace = true
