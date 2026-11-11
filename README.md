@@ -5,15 +5,16 @@
 # Nexus Desktop
 
 **An AI IDE and home-lab control room for Linux and NixOS, in Rust.**<br>
-The Linux port of [Nexus Desktop for Windows](https://github.com/ljcatherine/NexusWindows), companion to the [Nexus iPhone app](https://github.com/ljcatherine/Nexus), in the Midnight Liquid Glass design.
+The Linux edition of Nexus Desktop, companion to the Nexus iPhone app, in the Midnight Liquid Glass design.
 
 [![NixOS 26.05](https://img.shields.io/badge/NixOS-26.05%20flake-0B1430?style=flat-square&logo=nixos&logoColor=9CBCFF&labelColor=070C18)](flake.nix)
 [![Rust](https://img.shields.io/badge/Rust-1.95%2B-0B1430?style=flat-square&logo=rust&logoColor=F1C07E&labelColor=070C18)](rust-toolchain.toml)
 [![egui](https://img.shields.io/badge/UI-egui%200.37-0B1430?style=flat-square&labelColor=070C18)](crates/nexus-ui)
 [![AI](https://img.shields.io/badge/AI-Codex%20%C2%B7%20Claude%20Code-0B1430?style=flat-square&logo=anthropic&logoColor=C9ADFF&labelColor=070C18)](#ai-providers)
-[![Private](https://img.shields.io/badge/repo-private-0B1430?style=flat-square&labelColor=070C18)](#)
+[![License](https://img.shields.io/badge/license-proprietary-0B1430?style=flat-square&labelColor=070C18)](#license)
 
 [**Install**](#install) ·
+[Configure](#configure) ·
 [Linux parity](docs/PARITY-LINUX.md) ·
 [Status](docs/STATUS.md) ·
 [Security model](docs/SECURITY-MODEL.md) ·
@@ -62,10 +63,10 @@ Minecraft and PS5LM status.
 <td width="50%" valign="top">
 
 ### Security
-Every remote action goes through one policy engine in Rust. Debian is read-only
-by default, enforced on the server by the `nexus-ro` helper. The owner can unlock
-Debian writes for 30 minutes; agents never can. Optional app lock with a 4-digit
-code from the iPhone app.
+Every remote action goes through one policy engine in Rust. A host marked as the
+protected Debian server is read-only by default, enforced on the server by the
+`nexus-ro` helper. Its owner can unlock writes for 30 minutes; AI agents never can.
+Optional app lock with a 4-digit code from the iPhone app.
 
 </td>
 </tr>
@@ -97,22 +98,29 @@ flowchart LR
 
 ## Install
 
-NixOS, from this private repo. Use a `git+https` URL so Nix fetches through
-git's credential helper (run `gh auth login` and `gh auth setup-git` once);
-plain `github:` URLs fail for private repos unless Nix has its own
-`access-tokens` setting.
+Needs Nix with flakes on x86_64 or aarch64 Linux. NixOS is the main target.
+
+Try it without installing:
 
 ```bash
-nix run git+https://github.com/ljcatherine/NexusNix
+nix run github:ljcatherine/NexusNix
 ```
 
+Install it on NixOS by adding the flake to your system configuration:
+
 ```nix
-# flake.nix of your NixOS configuration
-inputs.nexus-nix.url = "git+https://github.com/ljcatherine/NexusNix";
-# …then in a NixOS module:
+# flake.nix
+inputs.nexus-nix.url = "github:ljcatherine/NexusNix";
+
+# in a NixOS module
 imports = [ inputs.nexus-nix.nixosModules.default ];
-programs.nexus-desktop.enable = true;   # package, desktop entry, sign-in URL handler, portal
+programs.nexus-desktop.enable = true;   # app, desktop entry, sign-in URL handler, XDG portal
 ```
+
+The package is marked unfree (see [License](#license)). The flake's own outputs
+and the NixOS module allow it. If you use `overlays.default` with your own nixpkgs,
+allow it there, for example with
+`nixpkgs.config.allowUnfreePredicate = p: lib.getName p == "nexus-desktop";`.
 
 From a checkout:
 
@@ -127,6 +135,26 @@ for API keys, SSH passphrases and the app-lock secret, and an XDG desktop portal
 for file dialogs. It runs through XWayland by default so the app lock can see
 minimising; `NEXUS_WAYLAND=1` selects native Wayland (see
 [PARITY-LINUX](docs/PARITY-LINUX.md), P24).
+
+## Configure
+
+Everything specific to your own setup lives outside the source. Without it, Nexus
+still runs as an IDE and AI client and can manage hosts you add over LAN or
+Tailscale; only the Cloudflare relay and Access sign-in stay off.
+
+Copy [`docs/site.example.json`](docs/site.example.json) to
+`~/.config/nexus-desktop/site.json` and fill in your values:
+
+| Field | What it is |
+|---|---|
+| `gateway_host` | Host name of your Nexus Worker (Cloudflare relay and Access resource) |
+| `access_issuer` | Your Cloudflare Access team URL, `https://<team>.cloudflareaccess.com` |
+| `access_client_id` | The Access application's public native client id |
+| `debian_user` | SSH account on the server Nexus must treat as read-only |
+| `nixos_user` | SSH account on your NixOS machine |
+
+On NixOS you can set the same values with `programs.nexus-desktop.site = { … };`,
+which writes `/etc/nexus-desktop/site.json`. A per-user file takes precedence.
 
 ## AI providers
 
@@ -161,13 +189,18 @@ rendered to `.png` by [`scripts/render-icons.sh`](scripts/render-icons.sh).
 ## Security
 
 > [!IMPORTANT]
-> The Debian server also runs the Nexus gateway, so it is read-only by default.
-> That rule is enforced in the Rust backend ([`nexus-security`](crates/nexus-security))
-> and on the server ([`nexus-ro`](crates/nexus-ro)), not only in the UI.
-> AI agents never get write access to Debian in any mode.
+> The protected Debian server (it can host the Nexus gateway) is read-only by
+> default. That rule is enforced in the Rust backend
+> ([`nexus-security`](crates/nexus-security)) and on the server
+> ([`nexus-ro`](crates/nexus-ro)), not only in the UI. AI agents never get write
+> access to it in any mode. Nexus never disables SSH host-key or TLS checks.
 
-The full model, including the owner's timed Debian unlock and the app lock, is in
+The full model, including the owner's timed unlock and the app lock, is in
 [docs/SECURITY-MODEL.md](docs/SECURITY-MODEL.md) and [docs/OTP.md](docs/OTP.md).
+
+Found a security problem? Please open a private
+[security advisory](https://github.com/ljcatherine/NexusNix/security/advisories/new)
+instead of a public issue.
 
 ## Project layout
 
@@ -205,10 +238,19 @@ The full model, including the owner's timed Debian unlock and the app lock, is i
 | [SECURITY-MODEL](docs/SECURITY-MODEL.md) | Threat model and enforcement |
 | [OTP](docs/OTP.md) | App-lock passcode spec shared with iOS |
 | [PLAN](docs/PLAN.md) · [adr/](docs/adr) | Design decisions |
+| [BUILD-AND-RELEASE](docs/BUILD-AND-RELEASE.md) | Toolchain, commands and data locations |
 | [log/](docs/log) | Dated development log |
 
 </details>
 
+## License
+
+Copyright © 2026 Liam Catherine. All rights reserved.
+
+The source is published so you can read, build and run it, but no open-source
+license is granted: the workspace is `LicenseRef-Proprietary`, and Nix marks the
+package unfree. Ask before redistributing or reusing the code.
+
 <div align="center">
-<sub>Nexus Desktop for Linux · private · built locally with Nix</sub>
+<sub>Nexus Desktop for Linux · built locally with Nix</sub>
 </div>

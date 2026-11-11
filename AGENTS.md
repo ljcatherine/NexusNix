@@ -1,6 +1,6 @@
 # Nexus Desktop for Linux engineering rules
 
-This repo (`ljcatherine/NexusNix`, private) is the Linux/NixOS port of Nexus
+This repo (`ljcatherine/NexusNix`, public) is the Linux/NixOS port of Nexus
 Desktop for Windows (`ljcatherine/NexusWindows`, private), itself the companion
 to the Nexus iOS app (`ljcatherine/Nexus`). Features and behaviour must match
 the Windows app 1:1; every Windows-only API and every deliberate difference is
@@ -64,7 +64,7 @@ unsigned releases via its script); nothing else in the iOS app is in scope.
 - Never force-push, reset, delete branches or discard user changes automatically.
 
 ## Git and releases
-- Repo: private `ljcatherine/NexusNix`, branch `main`. Commit frequently in
+- Repo: public `ljcatherine/NexusNix`, branch `main`. Never commit anything owner-specific (see above). Commit frequently in
   focused commits and push.
 - Build and test locally with `nix build` (runs the workspace tests) or
   `nix develop` + `cargo test --workspace`. Do not use GitHub Actions or

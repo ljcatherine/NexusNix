@@ -14,8 +14,9 @@
 - Debian detection still uses all built-in signals; the site only adds names.
 - **Verified:** 125 tests pass with and without a site file; with the owner's
   file the Settings card shows the real Worker and issuer.
-- **Not done:** git history still contains the old values (first import commit
-  onwards); a public release needs a fresh history.
+- History: the old development history (which contained those values) was
+  replaced by one clean commit and the GitHub repo recreated, so the old
+  commits are no longer served. The repo was then made public.
 
 ## 11 November 2026 — one passcode key for several PCs
 
@@ -31,8 +32,8 @@
 
 ## 10 November 2026 — Linux/NixOS port (NexusNix), from Windows 0.1.13
 
-- New private repo `ljcatherine/NexusNix`. First commit is NexusWindows `2e83c4d`
-  unmodified (minus the committed SSH test private keys); later commits port it.
+- New repo `ljcatherine/NexusNix`, ported from NexusWindows `2e83c4d` (the SSH
+  test private keys committed there were left out).
   Every Windows-only API and every gap is in `docs/PARITY-LINUX.md`.
 - Linux mechanisms: XDG directories (0700), Secret Service through `keyring`
   (KWallet/GNOME Keyring) in place of Credential Manager, an AES-256-GCM Access

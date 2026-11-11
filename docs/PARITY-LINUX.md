@@ -1,7 +1,8 @@
 # Feature parity: Nexus Desktop for Windows → Linux (NixOS)
 
-Source: `ljcatherine/NexusWindows` at `2e83c4d` (0.1.13), imported unmodified
-as this repo's first commit. Every later commit is the Linux port.
+Source: Nexus Desktop for Windows 0.1.13 (`2e83c4d` in the Windows repo). The
+port started from that code unmodified; the published history is a single
+commit.
 Primary target: NixOS 26.05 with KDE Plasma 6 on Wayland (the owner's machine).
 
 **Status key.** **Same**: identical code on both platforms. **Adapted**: same
